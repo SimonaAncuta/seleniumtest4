@@ -9,8 +9,9 @@ public class AppConfig {
     private static Properties properties = new Properties();
 
     static {
+        String environment = System.getProperty("env", "production");
         InputStream inputStream =
-                AppConfig.class.getClassLoader().getResourceAsStream("production.properties");
+                AppConfig.class.getClassLoader().getResourceAsStream(environment + ".properties");
 
         try {
             properties.load(inputStream);
@@ -20,13 +21,25 @@ public class AppConfig {
     }
 
     private static String chromeDriverPath = properties.getProperty("chrome.driver.path");
+    private static String geckoDriverPath = properties.getProperty("gecko.driver.path");
     private static String siteUrl = properties.getProperty("site.url");
+    private static long implicitTimeout = Long.parseLong(properties.getProperty("implicit.timeout"));
+
+
 
     public static String getChromeDriverPath() {
         return chromeDriverPath;
     }
 
+    public static String getGeckoDriverPath() {
+        return geckoDriverPath;
+    }
+
     public static String getSiteUrl() {
         return siteUrl;
+    }
+
+    public static long getImplicitTimeout() {
+        return implicitTimeout;
     }
 }

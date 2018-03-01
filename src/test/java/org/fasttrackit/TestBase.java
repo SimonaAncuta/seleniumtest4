@@ -15,16 +15,17 @@ public class TestBase {
 
     @Before
     public void setup() {
-        System.setProperty("webdriver.chrome.driver",
-                "/Users/ElenaSimonaAncuta/Desktop/webDrivers/chromedriver");
-        driver = new ChromeDriver();
+        String browser = System.getProperty("browser", "chrome");
 
-        driver.get("https://fasttrackit.org/selenium-test/");
+        driver = DriverFactory.getWebDriver(browser);
+
+
+        driver.get(AppConfig.getSiteUrl());
     }
 
     @After
     public void teardown() {
-        driver.quit();
+    //    driver.quit();
     }
 
     protected void mouseOverAndClickLast(List<By> locators) {
